@@ -1,0 +1,27 @@
+global:
+  env:
+    - LARAVEL_ENV: development
+web1:
+  after_build:
+    - "if [ ! -f composer.phar ]; then curl -s http://getcomposer.org/installer | php; fi; php composer.phar install"
+  name: Feedtastic
+  shared_writable_dirs:
+    - /app/storage/cache
+    - /app/storage/logs
+    - /app/storage/meta
+    - /app/storage/sessions
+    - /app/storage/views
+  document_root: public
+  php_version: 5.3.10
+  php_extensions:
+    - zip
+    - pdo_mysql
+    - mcrypt
+    - eaccelerator
+    - memcached
+  before_deploy:
+    - "php artisan migrate:install"
+    - "php artisan migrate"
+  after_deploy:
+    - "rm -f app/storage/cache/*"
+    - "rm -f app/storage/views/*"
