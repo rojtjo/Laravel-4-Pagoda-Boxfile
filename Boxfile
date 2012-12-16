@@ -1,10 +1,10 @@
 global:
   env:
-    - LARAVEL_ENV: development
+    - LARAVEL_ENV: production
 web1:
   after_build:
     - "if [ ! -f composer.phar ]; then curl -s http://getcomposer.org/installer | php; fi; php composer.phar install"
-  name: Feedtastic
+  name: application name
   shared_writable_dirs:
     - /app/storage/cache
     - /app/storage/logs
